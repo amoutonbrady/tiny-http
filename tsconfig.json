@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "dist",
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "strict": true,
+    "sourceMap": true,
+    "inlineSources": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**/*"]
+}
