@@ -44,7 +44,7 @@ export const headers: Piper<AnyObject> = (headers) => (opts) =>
         headers,
       }
     : opts;
-export const params: Piper<AnyObject> = (params) => (opts) => {
+export const params: Piper<AnyObject<any>> = (params) => (opts) => {
   if (!params) return opts;
   for (const [key, value] of Object.entries(params)) {
     opts.params.append(key, JSON.stringify(value));
@@ -76,7 +76,7 @@ export const method: Piper<Method> = (type) => (opts) =>
       }
     : opts;
 
-export function http(userOpts: Partial<Options> = {}) {
+export const http: HttpClient = (userOpts = {}) => {
   const mergedOptions: Options = {
     url: "",
     middlewares: [],
@@ -90,23 +90,33 @@ export function http(userOpts: Partial<Options> = {}) {
   };
 
   return {
-    pipe(...pipes: Pipe[]) {
+    pipe(...pipes) {
       return http(
-        pipes.reduce((options, pipe) => pipe(options), mergedOptions)
+        pipes.reduce<Options>((options, pipe) => pipe(options), mergedOptions)
       );
     },
-    get<T = any>(url: string): Promise<T> {
-      return http(mergedOptions).pipe(method("GET"), appendUrl(url)).run();
+    get(url = "", query) {
+      return http(mergedOptions)
+        .pipe(method("GET"), appendUrl(url), params(query))
+        .run();
     },
-    post<T = any>(url: string, body: BodyInit): Promise<T> {
+    post(url = "", body) {
       return http(mergedOptions)
         .pipe(method("POST"), appendUrl(url), appendBody(body))
         .run();
     },
-    run<T>(): Promise<T> {
-      return makeFinalCall<T>(mergedOptions);
+    run() {
+      return makeFinalCall(mergedOptions);
     },
   };
+};
+
+export type HttpClient = (opts?: Partial<Options>) => HttpClientObject;
+export interface HttpClientObject {
+  pipe(...pipes: Pipe[]): HttpClientObject;
+  get<T = any>(url?: string, params?: AnyObject<any>): Promise<T>;
+  post<T = any>(url?: string, body?: BodyInit): Promise<T>;
+  run<T>(): Promise<T>;
 }
 
 export interface Options {
