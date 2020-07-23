@@ -1,5 +1,14 @@
 # tiny-http
 
+<p align="center">
+    <a href="https://bundlephobia.com/result?p=@amoutonbrady/tiny-http">
+      <img src="https://badgen.net/bundlephobia/min/@amoutonbrady/tiny-http" />
+    </a>
+    <a href="https://www.pika.dev/npm/@amoutonbrady/tiny-http">
+      <img src="https://badgen.net/npm/v/@amoutonbrady/tiny-http" />
+    </a>
+</p>
+
 A tiny client side HTTP client, light and extensible
 
 ✔ Extensible, everything is pretty much a middleware
