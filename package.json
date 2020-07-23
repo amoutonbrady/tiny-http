@@ -5,6 +5,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "dist"
+  ],
   "description": "A tiny client side HTTP client, light and extensible",
   "source": "src/index.ts",
   "main": "dist/http.cjs.js",
