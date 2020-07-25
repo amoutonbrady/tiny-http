@@ -3,7 +3,7 @@ function makeFinalCall<T>(options: Options): Promise<T> {
     (opts, middleware) => middleware(opts),
     options
   );
-  if (options.response === "json") {
+  if (options.json) {
     finalOpts.headers["Content-Type"] = "application/json";
   }
   const url = finalOpts.url + "?" + options.params.toString();
@@ -12,38 +12,24 @@ function makeFinalCall<T>(options: Options): Promise<T> {
     ...finalOpts.fetchOptions,
     headers: finalOpts.headers,
   })
-    .then((r) => {
-      finalOpts.resolvers.forEach((resolver) => resolver(r));
-      return r[finalOpts.response]();
-    })
-    .catch((err) => {
-      finalOpts.catchers.forEach((catcher) => catcher(err));
-    });
+    .then((r) => r[finalOpts.responseType]())
+    .then((r) => finalOpts.resolver(r))
+    .catch((err) => finalOpts.catcher(err));
 }
 
-export const url: Piper<string> = (url) => (opts) =>
-  url ? { ...opts, url } : opts;
-export const appendUrl: Piper<string> = (url) => (opts) =>
-  url
-    ? {
-        ...opts,
-        url: opts.url + url,
-      }
-    : opts;
-export const appendBody: Piper<BodyInit> = (body) => (opts) =>
-  body
-    ? {
-        ...opts,
-        fetchOptions: { ...opts.fetchOptions, body },
-      }
-    : opts;
-export const headers: Piper<AnyObject> = (headers) => (opts) =>
-  headers
-    ? {
-        ...opts,
-        headers,
-      }
-    : opts;
+export const url: Piper<string> = (url) => (opts) => ({ ...opts, url });
+export const appendUrl: Piper<string> = (url) => (opts) => ({
+  ...opts,
+  url: opts.url + url,
+});
+export const appendBody: Piper<BodyInit> = (body) => (opts) => ({
+  ...opts,
+  fetchOptions: { ...opts.fetchOptions, body },
+});
+export const headers: Piper<AnyObject> = (headers) => (opts) => ({
+  ...opts,
+  headers,
+});
 export const params: Piper<AnyObject<any>> = (params) => (opts) => {
   if (!params) return opts;
   for (const [key, value] of Object.entries(params)) {
@@ -51,40 +37,35 @@ export const params: Piper<AnyObject<any>> = (params) => (opts) => {
   }
   return opts;
 };
-export const middleware: Piper<Pipe> = (pipe) => (opts) =>
-  pipe ? pipe(opts) : opts;
-export const resolve: Piper<ResponsePiper> = (resolver) => (opts) =>
-  resolver
-    ? {
-        ...opts,
-        resolvers: [...opts.resolvers, resolver],
-      }
-    : opts;
-export const error: Piper<Function> = (catcher) => (opts) =>
-  catcher
-    ? {
-        ...opts,
-        catchers: [...opts.catchers, catcher],
-      }
-    : opts;
-export const json: Piper = () => (opts) => ({ ...opts, response: "json" });
-export const method: Piper<Method> = (type) => (opts) =>
-  type
-    ? {
-        ...opts,
-        fetchOptions: { ...opts.fetchOptions, method: type },
-      }
-    : opts;
+export const middleware: Piper<Pipe> = (pipe) => (opts) => pipe(opts);
+export const resolve: Piper<ResponsePiper> = (resolver) => (opts) => ({
+  ...opts,
+  resolver,
+});
+export const error: Piper<ErrorPiper> = (catcher) => (opts) => ({
+  ...opts,
+  catcher,
+});
+export const json: ArgumentlessPiper = () => (opts) => ({
+  ...opts,
+  response: "json",
+  json: true,
+});
+export const method: Piper<Method> = (type) => (opts) => ({
+  ...opts,
+  fetchOptions: { ...opts.fetchOptions, method: type },
+});
 
 export const http: HttpClient = (userOpts = {}) => {
   const mergedOptions: Options = {
     url: "",
     middlewares: [],
-    response: "json",
+    responseType: "json",
+    json: true,
     headers: {},
     params: new URLSearchParams(),
-    resolvers: [],
-    catchers: [],
+    resolver: (res) => res,
+    catcher: (err) => err,
     fetchOptions: {},
     ...userOpts,
   };
@@ -95,12 +76,12 @@ export const http: HttpClient = (userOpts = {}) => {
         pipes.reduce<Options>((options, pipe) => pipe(options), mergedOptions)
       );
     },
-    get(url = "", query) {
+    get(url = "", query = {}) {
       return http(mergedOptions)
         .pipe(method("GET"), appendUrl(url), params(query))
         .run();
     },
-    post(url = "", body) {
+    post(url = "", body = "") {
       return http(mergedOptions)
         .pipe(method("POST"), appendUrl(url), appendBody(body))
         .run();
@@ -122,16 +103,23 @@ export interface HttpClientObject {
 export interface Options {
   url: string;
   middlewares: Pipe[];
-  response: "json" | "blob" | "text" | "arrayBuffer" | "formData" | "clone";
+  responseType: "json" | "blob" | "text" | "arrayBuffer" | "formData" | "clone";
+  json: boolean;
   headers: Record<string, string>;
   params: URLSearchParams;
-  resolvers: ResponsePiper[];
-  catchers: Function[];
+  resolver: ResponsePiper;
+  catcher: ErrorPiper;
   fetchOptions: RequestInit;
 }
 
-export type ResponsePiper = (res: Response) => any;
+export type ResponsePiper<HttpResponse = any, YourResponse = any> = (
+  res: HttpResponse
+) => YourResponse;
+export type ErrorPiper<HttpError = Error, YourError = Error> = (
+  err: HttpError
+) => YourError;
 export type Pipe = (options: Options) => Options;
-export type Piper<T = any> = (params?: T) => Pipe;
+export type Piper<T = any> = (params: T) => Pipe;
+export type ArgumentlessPiper = () => Pipe;
 export type AnyObject<T = string> = Record<string, T>;
 export type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
