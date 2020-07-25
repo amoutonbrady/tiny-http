@@ -6,9 +6,9 @@ function makeFinalCall<T>(options: Options): Promise<T> {
   if (options.json) {
     finalOpts.headers["Content-Type"] = "application/json";
   }
-  const url = finalOpts.url + "?" + options.params.toString();
+  const url = finalOpts.url + "?" + decodeURI(options.params.toString());
 
-  return fetch(decodeURI(url), {
+  return fetch(url, {
     ...finalOpts.fetchOptions,
     headers: finalOpts.headers,
   })
@@ -56,6 +56,14 @@ export const method: Piper<Method> = (type) => (opts) => ({
   fetchOptions: { ...opts.fetchOptions, method: type },
 });
 
+const cloneOptions = (opts: Options) => {
+  return Object.entries(opts).reduce<any>((cloned, [key, value]) => {
+    cloned[key] =
+      value instanceof URLSearchParams ? new URLSearchParams(value) : value;
+    return cloned;
+  }, {});
+};
+
 export const http: HttpClient = (userOpts = {}) => {
   const mergedOptions: Options = {
     url: "",
@@ -73,21 +81,24 @@ export const http: HttpClient = (userOpts = {}) => {
   return {
     pipe(...pipes) {
       return http(
-        pipes.reduce<Options>((options, pipe) => pipe(options), mergedOptions)
+        pipes.reduce<Options>(
+          (options, pipe) => pipe(options),
+          cloneOptions(mergedOptions)
+        )
       );
     },
     get(url = "", query = {}) {
-      return http(mergedOptions)
+      return http(cloneOptions(mergedOptions))
         .pipe(method("GET"), appendUrl(url), params(query))
         .run();
     },
     post(url = "", body = "") {
-      return http(mergedOptions)
+      return http(cloneOptions(mergedOptions))
         .pipe(method("POST"), appendUrl(url), appendBody(body))
         .run();
     },
     run() {
-      return makeFinalCall(mergedOptions);
+      return makeFinalCall(cloneOptions(mergedOptions));
     },
   };
 };
