@@ -8,7 +8,7 @@ function makeFinalCall<T>(options: Options): Promise<T> {
   }
   const url = finalOpts.url + "?" + options.params.toString();
 
-  return fetch(url, {
+  return fetch(decodeURI(url), {
     ...finalOpts.fetchOptions,
     headers: finalOpts.headers,
   })

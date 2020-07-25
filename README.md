@@ -20,7 +20,41 @@ A tiny client side HTTP client, light and extensible
 
 `npm install @amoutonbrady/tiny-http`
 
-## Usage
+### Options
+
+```ts
+type Pipe = (options: Options) => Options;
+type ResponsePiper<T1 = any, T2 = any> = (res: T1) => T2;
+type ErrorPiper<T1 = Error, T1 = Error> = (err: T1) => T2;
+
+interface Options {
+  url: string;
+  middlewares: Pipe[];
+  responseType: "json" | "blob" | "text" | "arrayBuffer" | "formData" | "clone";
+  json: boolean;
+  headers: Record<string, string>;
+  params: URLSearchParams;
+  resolver: ResponsePiper;
+  catcher: ErrorPiper;
+  fetchOptions: RequestInit;
+}
+```
+
+You can feed these options to a brand new `http()` call:
+
+```ts
+const client = http({
+  url: "http://localhost",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  ...
+})
+
+const res = await client.get<string>("/test");
+```
+
+or/and pipe the client to modify them as you please
 
 ```ts
 import {
@@ -35,13 +69,13 @@ import {
 } from "@amoutonbrady/tiny-http";
 
 const client = http().pipe(
-  url("http://localhost"),
+  url("http://localhost", true), // Replace the URL, the second parameter is to replace or append
   headers({ "Content-Type": "application/json" }),
   params({ test: "trololol" }),
-  middleware((opts) => opts),
-  resolve(console.log),
-  json(),
-  error(console.error)
+  middleware((opts) => opts), // Pretty much useless as you can just do (opts) => opts
+  json(), // sets responseType to `json` and json to true
+  resolve((res) => res), // Ran after the responseType is resolved fetch(url).then(r => r.json()).r(myResolver)
+  error((err) => err)
 );
 
 const res = await client.get<string>("/test");
