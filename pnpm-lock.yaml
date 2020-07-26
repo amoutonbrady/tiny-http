@@ -1,10 +1,10 @@
 devDependencies:
   '@rollup/plugin-node-resolve': 8.4.0_rollup@2.23.0
   '@rollup/plugin-typescript': 5.0.2_rollup@2.23.0+typescript@3.9.7
-  esbuild: 0.6.5
+  esbuild: 0.6.7
   node-fetch: 2.6.0
   rollup: 2.23.0
-  rollup-plugin-esbuild: 2.4.2_esbuild@0.6.5+rollup@2.23.0
+  rollup-plugin-esbuild: 2.4.2_esbuild@0.6.7+rollup@2.23.0
   rollup-plugin-terser: 6.1.0_rollup@2.23.0
   ts-node: 8.10.2_typescript@3.9.7
   typescript: 3.9.7
@@ -78,13 +78,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
-  /@types/node/14.0.24:
+  /@types/node/14.0.26:
     dev: true
     resolution:
-      integrity: sha512-btt/oNOiDWcSuI721MdL8VQGnjsKjlTMdrKyTcLCKeQp/n4AAMFJ961wMbp+09y8WuGPClDEv07RIItdXKIXAA==
+      integrity: sha512-W+fpe5s91FBGE0pEa0lnqGLL4USgpLgs4nokw16SrBBco/gQxuua7KnArSEOd5iaMqbbSHV10vUDkJYJJqpXKA==
   /@types/resolve/1.17.1:
     dependencies:
-      '@types/node': 14.0.24
+      '@types/node': 14.0.26
     dev: true
     resolution:
       integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==
@@ -156,12 +156,12 @@ packages:
       node: '>=0.3.1'
     resolution:
       integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
-  /esbuild/0.6.5:
+  /esbuild/0.6.7:
     dev: true
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-glMZd0b6W2soHuUuchM6c55e6gbdDhVpvYcmLsH3OJo87hQZcb3lFPZAJ5MbzLCJa2bChQOaoC4bqVtbqfsM/A==
+      integrity: sha512-1c4ghK1LR4M5oUlkpN0dI5aMlEYks+QXGEGBTouR85YpdFJ8n7Vx11Rc6O1qccytnYodRE88R52gGW7BpyA06g==
   /escape-string-regexp/1.0.5:
     dev: true
     engines:
@@ -264,10 +264,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-ic+7JYiV8Vi2yzQGFWOkiZD5Z9z7O2Zhm9XMaTxdJExKasieFCr+yXZ/WmXsckHiKl12ar0y6XiXDx3m4RHn1w==
-  /rollup-plugin-esbuild/2.4.2_esbuild@0.6.5+rollup@2.23.0:
+  /rollup-plugin-esbuild/2.4.2_esbuild@0.6.7+rollup@2.23.0:
     dependencies:
       '@rollup/pluginutils': 3.1.0_rollup@2.23.0
-      esbuild: 0.6.5
+      esbuild: 0.6.7
       joycon: 2.2.5
       strip-json-comments: 3.1.1
     dev: true
@@ -414,7 +414,7 @@ packages:
 specifiers:
   '@rollup/plugin-node-resolve': ^8.4.0
   '@rollup/plugin-typescript': ^5.0.2
-  esbuild: ^0.6.5
+  esbuild: ^0.6.7
   node-fetch: ^2.6.0
   rollup: ^2.23.0
   rollup-plugin-esbuild: ^2.4.2
