@@ -1,4 +1,4 @@
-import { http, url, json, params, resolve } from "..";
+import { http, url, json, resolve } from "..";
 import { suite } from "uvu";
 import { ok } from "assert";
 import fetch from "node-fetch";
