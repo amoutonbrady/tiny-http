@@ -6,7 +6,8 @@ function makeFinalCall<T>(options: Options): Promise<T> {
   if (options.json) {
     finalOpts.headers["Content-Type"] = "application/json";
   }
-  const url = finalOpts.url + "?" + decodeURI(options.params.toString());
+  const params = decodeURI(options.params.toString());
+  const url = finalOpts.url + (params ? `?${params}` : "");
 
   return fetch(url, {
     ...finalOpts.fetchOptions,
@@ -22,9 +23,9 @@ export const appendUrl: Piper<string> = (url) => (opts) => ({
   ...opts,
   url: opts.url + url,
 });
-export const appendBody: Piper<BodyInit> = (body) => (opts) => ({
+export const appendBody: Piper<AnyObject> = (body) => (opts) => ({
   ...opts,
-  fetchOptions: { ...opts.fetchOptions, body },
+  fetchOptions: { ...opts.fetchOptions, body: JSON.stringify(body) },
 });
 export const headers: Piper<AnyObject> = (headers) => (opts) => ({
   ...opts,
@@ -92,7 +93,7 @@ export const http: HttpClient = (userOpts = {}) => {
         .pipe(method("GET"), appendUrl(url), params(query))
         .run();
     },
-    post(url = "", body = "") {
+    post(url = "", body: AnyObject) {
       return http(cloneOptions(mergedOptions))
         .pipe(method("POST"), appendUrl(url), appendBody(body))
         .run();
@@ -107,7 +108,7 @@ export type HttpClient = (opts?: Partial<Options>) => HttpClientObject;
 export interface HttpClientObject {
   pipe(...pipes: Pipe[]): HttpClientObject;
   get<T = any>(url?: string, params?: AnyObject<any>): Promise<T>;
-  post<T = any>(url?: string, body?: BodyInit): Promise<T>;
+  post<T = any>(url?: string, body?: AnyObject): Promise<T>;
   run<T>(): Promise<T>;
 }
 
