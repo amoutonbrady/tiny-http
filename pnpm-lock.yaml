@@ -4,6 +4,7 @@ devDependencies:
   '@rollup/plugin-babel': 5.2.1_6658277aa8e86743bdc6dca9b327d8cb
   '@rollup/plugin-node-resolve': 9.0.0_rollup@2.26.11
   '@rollup/plugin-typescript': 6.0.0_rollup@2.26.11+typescript@4.0.2
+  esm: 3.2.25
   node-fetch: 2.6.1
   rollup: 2.26.11
   rollup-plugin-terser: 7.0.2_rollup@2.26.11
@@ -378,6 +379,12 @@ packages:
       node: '>=0.8.0'
     resolution:
       integrity: sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+  /esm/3.2.25:
+    dev: true
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
   /estree-walker/1.0.1:
     dev: true
     resolution:
@@ -663,6 +670,7 @@ specifiers:
   '@rollup/plugin-babel': ^5.2.1
   '@rollup/plugin-node-resolve': ^9.0.0
   '@rollup/plugin-typescript': ^6.0.0
+  esm: ^3.2.25
   node-fetch: ^2.6.1
   rollup: ^2.26.11
   rollup-plugin-terser: ^7.0.2

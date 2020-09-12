@@ -9,14 +9,14 @@
     "dist"
   ],
   "description": "A tiny client side HTTP client, light and extensible",
-  "main": "dist/http.cjs.js",
-  "module": "dist/http.esm.js",
-  "browser": "dist/http.browser.js",
+  "main": "dist/http.js",
+  "module": "dist/http.js",
+  "browser": "dist/http.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c && tsc",
-    "prepublishOnly": "pnpm build",
-    "test": "uvu -r ts-node/register tests"
+    "prepublishOnly": "pnpm build && pnpm test",
+    "test": "uvu -r ts-node/register -r esm tests"
   },
   "keywords": [
     "http",
@@ -32,6 +32,7 @@
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-typescript": "^6.0.0",
+    "esm": "^3.2.25",
     "node-fetch": "^2.6.1",
     "rollup": "^2.26.11",
     "rollup-plugin-terser": "^7.0.2",

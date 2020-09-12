@@ -10,23 +10,9 @@ const config = {
   input: "src/index.ts",
   output: [
     {
-      file: pkg.main,
-      format: "commonjs",
-      name: "http",
-      sourcemap: true,
-    },
-    {
       file: pkg.module,
       format: "esm",
-      name: "http",
       sourcemap: true,
-    },
-    {
-      file: pkg.browser,
-      format: "iife",
-      name: "http",
-      sourcemap: true,
-      plugins: [terser()],
     },
   ],
   plugins: [
