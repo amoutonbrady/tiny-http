@@ -6,7 +6,7 @@ import pkg from "./package.json";
  * @type {import('rollup').RollupOptions}
  */
 const config = {
-  input: pkg.source,
+  input: "src/index.ts",
   output: [
     {
       file: pkg.main,
