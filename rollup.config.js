@@ -1,5 +1,6 @@
-import esbuild from "rollup-plugin-esbuild";
-import resolve from "@rollup/plugin-node-resolve";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import { babel } from "@rollup/plugin-babel";
+import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json";
 
 /**
@@ -25,15 +26,15 @@ const config = {
       format: "iife",
       name: "http",
       sourcemap: true,
+      plugins: [terser()],
     },
   ],
   plugins: [
-    resolve({ extensions: [".ts"] }),
-    esbuild({
-      include: /\.[jt]sx?$/,
-      exclude: /node_modules/,
-      minify: true,
-      target: "esnext",
+    nodeResolve({ extensions: [".ts"] }),
+    babel({
+      extensions: [".ts"],
+      presets: ["@babel/typescript"],
+      babelHelpers: "bundled",
     }),
   ],
 };
