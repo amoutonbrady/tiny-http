@@ -9,7 +9,6 @@
     "dist"
   ],
   "description": "A tiny client side HTTP client, light and extensible",
-  "source": "src/index.ts",
   "main": "dist/http.cjs.js",
   "module": "dist/http.esm.js",
   "browser": "dist/http.browser.js",
