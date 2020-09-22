@@ -1,7 +1,8 @@
 import { http, url, json, resolve } from "..";
 import { suite } from "uvu";
-import { ok } from "assert";
+import { ok } from "uvu/assert";
 import fetch from "node-fetch";
+// @ts-ignore
 globalThis.fetch = fetch;
 
 const client = suite("client");

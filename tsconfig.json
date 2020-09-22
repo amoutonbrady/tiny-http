@@ -2,6 +2,10 @@
   "ts-node": {
     "transpileOnly": true,
     "compilerOptions": {
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "target": "ESNext",
       "module": "commonjs"
     },
     "include": ["tests/**/*"]

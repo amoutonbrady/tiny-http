@@ -1,7 +1,6 @@
 {
   "name": "@amoutonbrady/tiny-http",
   "version": "0.2.4",
-  "private": false,
   "publishConfig": {
     "access": "public"
   },
@@ -16,7 +15,7 @@
   "scripts": {
     "build": "rollup -c && tsc",
     "prepublishOnly": "pnpm build && pnpm test",
-    "test": "uvu -r ts-node/register -r esm tests"
+    "test": "uvu -r esm -r ts-node/register tests"
   },
   "keywords": [
     "http",
@@ -32,6 +31,7 @@
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-typescript": "^6.0.0",
+    "@types/node-fetch": "^2.5.7",
     "esm": "^3.2.25",
     "node-fetch": "^2.6.1",
     "rollup": "^2.26.11",
