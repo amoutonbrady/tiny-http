@@ -1,6 +1,6 @@
 {
   "name": "@amoutonbrady/tiny-http",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "publishConfig": {
     "access": "public"
   },
@@ -13,8 +13,8 @@
   "browser": "dist/http.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && rollup -c",
-    "prepublishOnly": "pnpm build && pnpm test",
+    "build": "rm -rf dist && rollup -c && tsc",
+    "prepublishOnly": "yarn build && yarn test",
     "test": "uvu -r esm -r ts-node/register tests"
   },
   "keywords": [
@@ -35,10 +35,10 @@
     "@types/node-fetch": "^2.5.7",
     "esm": "^3.2.25",
     "node-fetch": "^2.6.1",
-    "rollup": "^2.26.11",
+    "rollup": "^2.28.1",
     "rollup-plugin-terser": "^7.0.2",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.2",
+    "typescript": "^4.0.3",
     "uvu": "^0.3.3"
   }
 }
