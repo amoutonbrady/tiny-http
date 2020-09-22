@@ -19,6 +19,7 @@ __metadata:
     esm: ^3.2.25
     node-fetch: ^2.6.1
     rollup: ^2.28.1
+    rollup-plugin-terser: ^7.0.2
     ts-node: ^9.0.0
     typescript: ^4.0.3
     uvu: ^0.3.3
@@ -584,6 +585,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^2.20.0":
+  version: 2.20.3
+  resolution: "commander@npm:2.20.3"
+  checksum: b73428e97de7624323f81ba13f8ed9271de487017432d18b4da3f07cfc528ad754bbd199004bd5d14e0ccd67d1fdfe0ec8dbbd4c438b401df3c4cc387bfd1daa
+  languageName: node
+  linkType: hard
+
 "concat-map@npm:0.0.1":
   version: 0.0.1
   resolution: "concat-map@npm:0.0.1"
@@ -883,6 +891,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"has-flag@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "has-flag@npm:4.0.0"
+  checksum: 2e5391139d3d287231ccb58659702392f6e3abeac3296fb4721afaff46493f3d9b99a9329ae015dfe973aa206ed5c75f43e86aec0267dce79aa5c2b6e811b3ad
+  languageName: node
+  linkType: hard
+
 "has-unicode@npm:^2.0.0":
   version: 2.0.1
   resolution: "has-unicode@npm:2.0.1"
@@ -959,6 +974,17 @@ fsevents@~2.1.2:
   version: 0.1.2
   resolution: "isstream@npm:0.1.2"
   checksum: 8e6e5c4cf1823562db7035d2e7bac388412060fe9bc6727eca8c608def5aa57709165c51c2e68a2fce6ff0b64d79489501b84715060c5e8a477b87b6cbcd1eca
+  languageName: node
+  linkType: hard
+
+"jest-worker@npm:^26.2.1":
+  version: 26.3.0
+  resolution: "jest-worker@npm:26.3.0"
+  dependencies:
+    "@types/node": "*"
+    merge-stream: ^2.0.0
+    supports-color: ^7.0.0
+  checksum: 6b7190ef8f6e0dec1a2ed865624e45bc7a7d18795911890423813d1972521abe6f1f2e57076070cb70efa3b5f1b5cf54f33bc7e0bcda41d04341df47f0487d59
   languageName: node
   linkType: hard
 
@@ -1047,6 +1073,13 @@ fsevents@~2.1.2:
   version: 1.3.6
   resolution: "make-error@npm:1.3.6"
   checksum: 2c780bab8409b865e8ee86697c599a2bf2765ec64d21eb67ccda27050e039f983feacad05a0d43aba3c966ea03d305d2612e94fec45474bcbc61181f57c5bb88
+  languageName: node
+  linkType: hard
+
+"merge-stream@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "merge-stream@npm:2.0.0"
+  checksum: cde834809a0e65485e474de3162af9853ab2a07977fd36d328947b7b3e6207df719ffb115b11085ecc570501e15a2aa8bacd772ac53f77873f53b0626e52a39a
   languageName: node
   linkType: hard
 
@@ -1285,6 +1318,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"randombytes@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "randombytes@npm:2.1.0"
+  dependencies:
+    safe-buffer: ^5.1.0
+  checksum: ede2693af09732ceab1c273dd70db787f34a7b8d95bab13f1aca763483c0113452a78e53d61ff18d393dcea586d388e01f198a5132a4a85cebba31ec54164b75
+  languageName: node
+  linkType: hard
+
 "readable-stream@npm:^2.0.6":
   version: 2.3.7
   resolution: "readable-stream@npm:2.3.7"
@@ -1357,6 +1399,20 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"rollup-plugin-terser@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "rollup-plugin-terser@npm:7.0.2"
+  dependencies:
+    "@babel/code-frame": ^7.10.4
+    jest-worker: ^26.2.1
+    serialize-javascript: ^4.0.0
+    terser: ^5.0.0
+  peerDependencies:
+    rollup: ^2.0.0
+  checksum: 553cc21efcea3e4d46c61fbd41cb4a82a3ab8e02ae4ce7c03f9248dea93e5a91c3624e2271490ee05b2bb481568305733b496d968d3ac9c99b777a588a336f01
+  languageName: node
+  linkType: hard
+
 "rollup@npm:^2.28.1":
   version: 2.28.1
   resolution: "rollup@npm:2.28.1"
@@ -1380,7 +1436,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.2, safe-buffer@npm:~5.1.0, safe-buffer@npm:~5.1.1":
+"safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:^5.1.2, safe-buffer@npm:~5.1.0, safe-buffer@npm:~5.1.1":
   version: 5.1.2
   resolution: "safe-buffer@npm:5.1.2"
   checksum: 2708587c1b5e70a5e420714ceb59f30f5791c6e831d39812125a008eca63a4ac18578abd020a0776ea497ff03b4543f2b2a223a7b9073bf2d6c7af9ec6829218
@@ -1412,6 +1468,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"serialize-javascript@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "serialize-javascript@npm:4.0.0"
+  dependencies:
+    randombytes: ^2.1.0
+  checksum: f17305aaabab9ae443505d1bf477c13b09adb7031c397d18400bec16f43f788febdd3311ca6043fdebd1d446cfa70a5804ef7268da54351dec51080f56d52fa9
+  languageName: node
+  linkType: hard
+
 "set-blocking@npm:~2.0.0":
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
@@ -1426,7 +1491,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.17":
+"source-map-support@npm:^0.5.17, source-map-support@npm:~0.5.12":
   version: 0.5.19
   resolution: "source-map-support@npm:0.5.19"
   dependencies:
@@ -1443,7 +1508,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"source-map@npm:^0.6.0":
+"source-map@npm:^0.6.0, source-map@npm:~0.6.1":
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: 8647829a0611724114022be455ca1c8a2c8ae61df81c5b3667d9b398207226a1e21174fb7bbf0b4dbeb27ac358222afb5a14f1c74a62a62b8883b012e5eb1270
@@ -1509,6 +1574,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"supports-color@npm:^7.0.0":
+  version: 7.2.0
+  resolution: "supports-color@npm:7.2.0"
+  dependencies:
+    has-flag: ^4.0.0
+  checksum: 8e57067c39216f3c2ffce7cc14ca934d54746192571203aa9c9922d97d2d55cc1bdaa9e41a11f91e620670b5a74ebdec6b548a885d8cc2dea7cab59e21416029
+  languageName: node
+  linkType: hard
+
 "tar@npm:^6.0.1":
   version: 6.0.5
   resolution: "tar@npm:6.0.5"
@@ -1520,6 +1594,19 @@ fsevents@~2.1.2:
     mkdirp: ^1.0.3
     yallist: ^4.0.0
   checksum: 7ae26210927bdf590686db21e66d5579020ccbebda93a1adffe266eb88ca8b152c56dd8ce0df87d81e3dbe709bfe8562b29c584871ba015ec868dec9062e91ea
+  languageName: node
+  linkType: hard
+
+"terser@npm:^5.0.0":
+  version: 5.3.2
+  resolution: "terser@npm:5.3.2"
+  dependencies:
+    commander: ^2.20.0
+    source-map: ~0.6.1
+    source-map-support: ~0.5.12
+  bin:
+    terser: bin/terser
+  checksum: 4de06e4c6ca0e01199a9beba4a6a1e7b76d3465e2cfcf6a7cb195badfdebace709aa687fa209fb6793fa30d74b935d3d1e68603d3d90774109e0f2037a954ae3
   languageName: node
   linkType: hard
 
