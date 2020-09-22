@@ -13,7 +13,7 @@
   "browser": "dist/http.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c && tsc",
+    "build": "rm -rf dist && rollup -c",
     "prepublishOnly": "pnpm build && pnpm test",
     "test": "uvu -r esm -r ts-node/register tests"
   },
@@ -31,6 +31,7 @@
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-typescript": "^6.0.0",
+    "@types/node": "^14.11.2",
     "@types/node-fetch": "^2.5.7",
     "esm": "^3.2.25",
     "node-fetch": "^2.6.1",

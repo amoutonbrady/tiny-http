@@ -1,6 +1,6 @@
 import { http, url, json, resolve } from "..";
 import { suite } from "uvu";
-import { ok } from "uvu/assert";
+import { ok, type } from "uvu/assert";
 import fetch from "node-fetch";
 // @ts-ignore
 globalThis.fetch = fetch;
@@ -69,6 +69,58 @@ client("should be able to transform the response", async () => {
   const posts = await client.get<string>("", { userId });
 
   ok(posts === response);
+});
+
+client("create a ressource with post", async () => {
+  const client = http({
+    json: true,
+    responseType: "json",
+    url: "https://jsonplaceholder.typicode.com/",
+  });
+
+  const res = await client.post("posts", {
+    title: "foo",
+    body: "bar",
+    userId: 1,
+  });
+
+  type(res, "object");
+  ok("body" in res);
+});
+
+client("update a ressource with put and patch", async () => {
+  const client = http({
+    json: true,
+    responseType: "json",
+    url: "https://jsonplaceholder.typicode.com/",
+  });
+
+  const res = await client.put("posts/1", {
+    title: "foo",
+    body: "bar",
+    userId: 1,
+  });
+
+  type(res, "object");
+  ok("body" in res);
+
+  const res2 = await client.patch("posts/1", {
+    title: "foo",
+    body: "bar",
+    userId: 1,
+  });
+
+  type(res2, "object");
+  ok("body" in res2);
+});
+
+client("delete a ressource with delete", async () => {
+  http({
+    json: true,
+    responseType: "json",
+    url: "https://jsonplaceholder.typicode.com/",
+    preResolve: (res) => ok(res.status === 200),
+  }).delete("posts/1");
 });
 
 client.run();
