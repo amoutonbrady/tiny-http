@@ -30,7 +30,7 @@ type ErrorPiper<T1 = Error, T1 = Error> = (err: T1) => T2;
 interface Options {
   url: string;
   middlewares: Pipe[];
-  responseType: "json" | "blob" | "text" | "arrayBuffer" | "formData" | "clone";
+  responseType: 'json' | 'blob' | 'text' | 'arrayBuffer' | 'formData' | 'clone';
   json: boolean;
   headers: Record<string, string>;
   params: URLSearchParams;
@@ -66,17 +66,17 @@ import {
   resolve,
   json,
   error,
-} from "@amoutonbrady/tiny-http";
+} from '@amoutonbrady/tiny-http';
 
 const client = http().pipe(
-  url("http://localhost", true), // Replace the URL, the second parameter is to replace or append
-  headers({ "Content-Type": "application/json" }),
-  params({ test: "trololol" }),
+  url('http://localhost', true), // Replace the URL, the second parameter is to replace or append
+  headers({ 'Content-Type': 'application/json' }),
+  params({ test: 'trololol' }),
   middleware((opts) => opts), // Pretty much useless as you can just do (opts) => opts
   json(), // sets responseType to `json` and json to true
   resolve((res) => res), // Ran after the responseType is resolved fetch(url).then(r => r.json()).r(myResolver)
-  error((err) => err)
+  error((err) => err),
 );
 
-const res = await client.get<string>("/test");
+const res = await client.get<string>('/test');
 ```
