@@ -1,4 +1,4 @@
-import { Options } from "../types";
+import { Options } from '../types';
 
 export function cloneOptions(opts: Options) {
   return Object.entries(opts).reduce<any>((cloned, [key, value]) => {

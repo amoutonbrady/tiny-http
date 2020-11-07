@@ -1,4 +1,4 @@
-import { Piper, AnyObject } from "../types";
+import { Piper, AnyObject } from '../types';
 
 export const appendBody: Piper<AnyObject> = (body) => (opts) => ({
   ...opts,

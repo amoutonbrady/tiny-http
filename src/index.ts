@@ -4,45 +4,51 @@ import {
   AnyObject,
   HttpClient,
   HttpClientObject,
-} from "./types";
-import { cloneOptions } from "./utils/cloneOptions";
-import { method, appendUrl, appendBody, params } from "./operators";
+} from './types';
+import { cloneOptions } from './utils/cloneOptions';
+import { method, appendUrl, appendBody, params } from './operators';
 
 function makeFinalCall<T>(options: Options): Promise<T> {
-  const finalOpts = options.middlewares.reduce(
+  const {
+    url,
+    json,
+    headers,
+    fetchOptions,
+    responseType,
+    catcher,
+    resolver,
+    preResolve,
+  } = options.middlewares.reduce(
     (opts, middleware) => middleware(opts),
-    options
+    options,
   );
-  if (options.json) {
-    finalOpts.headers["Content-Type"] = "application/json";
-  }
-  const params = decodeURI(options.params.toString());
-  const url = finalOpts.url + (params ? `?${params}` : "");
 
-  return fetch(url, {
-    ...finalOpts.fetchOptions,
-    headers: finalOpts.headers,
-  })
+  if (json) headers['Content-Type'] = 'application/json';
+
+  const params = decodeURI(options.params.toString());
+  const finalUrl = url + (params ? `?${params}` : '');
+
+  return fetch(finalUrl, { ...fetchOptions, headers })
     .then((r) => {
-      if (finalOpts.preResolve) finalOpts.preResolve(r);
-      return r[finalOpts.responseType]();
+      if (preResolve) preResolve(r);
+      return r[responseType]();
     })
-    .then((r) => finalOpts.resolver(r))
-    .catch((err) => finalOpts.catcher(err));
+    .then(resolver)
+    .catch(catcher);
 }
 
 export const http: HttpClient = (userOpts = {}) => {
   const mergedOptions: Options = {
-    url: "",
-    middlewares: [],
-    responseType: "json",
+    url: '',
     json: true,
     headers: {},
-    params: new URLSearchParams(),
-    preResolve: (res) => res,
-    resolver: (res) => res,
-    catcher: (err) => err,
+    middlewares: [],
     fetchOptions: {},
+    responseType: 'json',
+    params: new URLSearchParams(),
+    catcher: (err) => err,
+    resolver: (res) => res,
+    preResolve: (res) => res,
     ...userOpts,
   };
 
@@ -51,8 +57,8 @@ export const http: HttpClient = (userOpts = {}) => {
       return http(
         pipes.reduce<Options>(
           (options, pipe) => pipe(options),
-          cloneOptions(mergedOptions)
-        )
+          cloneOptions(mergedOptions),
+        ),
       );
     },
     run() {
@@ -60,15 +66,15 @@ export const http: HttpClient = (userOpts = {}) => {
     },
   };
 
-  for (const httpVerb of ["POST", "PATCH", "PUT"] as const) {
-    res[httpVerb.toLowerCase()] = (url = "", body: AnyObject<any>) =>
+  for (const httpVerb of ['POST', 'PATCH', 'PUT'] as const) {
+    res[httpVerb.toLowerCase()] = (url = '', body: AnyObject<any>) =>
       http(cloneOptions(mergedOptions))
         .pipe(method(httpVerb), appendUrl(url), appendBody(body))
         .run();
   }
 
-  for (const httpVerb of ["GET", "DELETE"] as const) {
-    res[httpVerb.toLowerCase()] = (url = "", query = {}) =>
+  for (const httpVerb of ['GET', 'DELETE'] as const) {
+    res[httpVerb.toLowerCase()] = (url = '', query = {}) =>
       http(cloneOptions(mergedOptions))
         .pipe(method(httpVerb), appendUrl(url), params(query))
         .run();
@@ -77,4 +83,4 @@ export const http: HttpClient = (userOpts = {}) => {
   return res as HttpClientObject;
 };
 
-export * from "./operators";
+export * from './operators';

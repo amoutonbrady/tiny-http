@@ -1,4 +1,4 @@
-import { Piper, AnyObject } from "../types";
+import { Piper, AnyObject } from '../types';
 
 export const params: Piper<AnyObject<any>> = (params) => (opts) => {
   if (!params) return opts;

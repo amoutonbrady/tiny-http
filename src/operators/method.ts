@@ -1,4 +1,4 @@
-import { Piper, Method } from "../types";
+import { Piper, Method } from '../types';
 
 export const method: Piper<Method> = (type) => (opts) => ({
   ...opts,

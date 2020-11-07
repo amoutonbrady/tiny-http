@@ -12,7 +12,7 @@ export interface HttpClientObject {
 export interface Options {
   url: string;
   middlewares: Pipe[];
-  responseType: "json" | "blob" | "text" | "arrayBuffer" | "formData" | "clone";
+  responseType: 'json' | 'blob' | 'text' | 'arrayBuffer' | 'formData' | 'clone';
   json: boolean;
   headers: Record<string, string>;
   params: URLSearchParams;
@@ -23,13 +23,13 @@ export interface Options {
 }
 
 export type ResponsePiper<HttpResponse = any, YourResponse = any> = (
-  res: HttpResponse
+  res: HttpResponse,
 ) => YourResponse;
 export type ErrorPiper<HttpError = Error, YourError = Error> = (
-  err: HttpError
+  err: HttpError,
 ) => YourError;
 export type Pipe = (options: Options) => Options;
 export type Piper<T = any> = (params: T) => Pipe;
 export type ArgumentlessPiper = () => Pipe;
 export type AnyObject<T = string> = Record<string, T>;
-export type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';

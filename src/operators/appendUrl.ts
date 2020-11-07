@@ -1,4 +1,4 @@
-import { Piper } from "../types";
+import { Piper } from '../types';
 
 export const appendUrl: Piper<string> = (url) => (opts) => ({
   ...opts,
