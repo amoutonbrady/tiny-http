@@ -28,7 +28,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && rollup -c && tsc",
-    "prepublishOnly": "yarn build && yarn test",
+    "prepack": "yarn build && yarn test",
     "test": "uvu -r esm -r ts-node/register tests",
     "changelog": "gitmoji-changelog",
     "format": "prettier --write \"src/**/*.ts\""
