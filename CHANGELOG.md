@@ -1,5 +1,19 @@
 # Changelog
 
+<a name="0.4.0"></a>
+## 0.4.0 (2020-11-07)
+
+### Changed
+
+- 🎨 Running prettier [[2a055ed](https://github.com/amoutonbrady/tiny-http/commit/2a055ede09de45c20b3c7cb14c981db5f665a7e0)]
+- ⬆️ ➕ Adding prettier &amp; updating dev deps [[3ff83ec](https://github.com/amoutonbrady/tiny-http/commit/3ff83ece98e99bf8322fa4dcd2a05729b99a3a09)]
+- 🔧 Mark package as sideeffect free [[c5b16d4](https://github.com/amoutonbrady/tiny-http/commit/c5b16d4c781337642a6cc5f785ec5e8d9f7d3fe6)]
+
+### Removed
+
+- 🔥 Remove unused packages [[e8ed7b8](https://github.com/amoutonbrady/tiny-http/commit/e8ed7b8ad81932f42207e43826bf88e9bcdf07bd)]
+
+
 <a name="0.3.0"></a>
 ## 0.3.0 (2020-09-22)
 
