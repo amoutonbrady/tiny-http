@@ -1,6 +1,7 @@
 {
   "name": "@amoutonbrady/tiny-http",
-  "version": "0.5.2",
+  "version": "0.5.3",
+  "description": "A tiny client side HTTP client, light and extensible",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -13,18 +14,16 @@
     "type": "git",
     "url": "https://github.com/amoutonbrady/tiny-http.git"
   },
+  "main": "dist/http.common.js",
+  "module": "dist/http.module.js",
+  "unpkg": "dist/http.min.js",
   "exports": {
     ".": {
       "require": "./dist/http.common.js",
       "import": "./dist/http.module.js",
-      "default": "./dist/http.module.js",
-      "browser": "./dist/http.module.js"
+      "default": "./dist/http.module.js"
     }
   },
-  "description": "A tiny client side HTTP client, light and extensible",
-  "main": "dist/http.common.js",
-  "module": "dist/http.module.js",
-  "browser": "dist/http.min.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && rollup -c && tsc",
