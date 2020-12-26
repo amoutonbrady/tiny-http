@@ -16,11 +16,13 @@
   },
   "main": "dist/http.common.js",
   "module": "dist/http.module.js",
+  "browser": "dist/http.module.js",
   "unpkg": "dist/http.min.js",
   "exports": {
     ".": {
       "require": "./dist/http.common.js",
       "import": "./dist/http.module.js",
+      "browser": "./dist/http.module.js",
       "default": "./dist/http.module.js"
     }
   },

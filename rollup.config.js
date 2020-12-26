@@ -20,7 +20,7 @@ const config = {
       sourcemap: true,
     },
     {
-      file: pkg.browser,
+      file: pkg.unpkg,
       format: 'iife',
       name: 'TinyHttp',
       sourcemap: true,
