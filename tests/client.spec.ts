@@ -1,6 +1,6 @@
 import { http, url, json, resolve } from '..';
 import { suite } from 'uvu';
-import { ok, type } from 'uvu/assert';
+import { instance, ok, type } from 'uvu/assert';
 import fetch from 'node-fetch';
 // @ts-ignore
 globalThis.fetch = fetch;
@@ -8,9 +8,12 @@ globalThis.fetch = fetch;
 const client = suite('client');
 
 client('should be able to get an answer with pipe config', async () => {
-  const client = http().pipe(url('https://jsonplaceholder.typicode.com/'), json());
+  const client = http().pipe(
+    url('https://jsonplaceholder.typicode.com/'),
+    json(),
+  );
 
-  const todos = await client.get('todos');
+  const [_, todos] = await client.get('todos');
 
   ok(Array.isArray(todos));
 });
@@ -21,7 +24,7 @@ client('should be able to get answer with options config', async () => {
     responseType: 'json',
   });
 
-  const todos = await client.get('todos');
+  const [_, todos] = await client.get('todos');
 
   ok(Array.isArray(todos));
 });
@@ -29,7 +32,10 @@ client('should be able to get answer with options config', async () => {
 client('should be able to set query parameters', async () => {
   const userId = '1';
 
-  const client = http().pipe(url('https://jsonplaceholder.typicode.com/posts'), json());
+  const client = http().pipe(
+    url('https://jsonplaceholder.typicode.com/posts'),
+    json(),
+  );
 
   interface Post {
     userId: number;
@@ -38,8 +44,7 @@ client('should be able to set query parameters', async () => {
     body: string;
   }
 
-  const posts = await client.get<Post[]>('', { userId });
-
+  const [_, posts] = await client.get<Post[]>('', { userId });
   ok(posts.every((post) => post.userId === +userId));
 });
 
@@ -53,26 +58,15 @@ client('should be able to transform the response', async () => {
     resolve(() => response),
   );
 
-  interface Post {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-  }
-
-  const posts = await client.get<string>('', { userId });
+  const [_, posts] = await client.get<string>('', { userId });
 
   ok(posts === response);
 });
 
 client('create a ressource with post', async () => {
-  const client = http({
-    json: true,
-    responseType: 'json',
-    url: 'https://jsonplaceholder.typicode.com/',
-  });
+  const client = http({ url: 'https://jsonplaceholder.typicode.com/' });
 
-  const res = await client.post('posts', {
+  const [_, res] = await client.post('posts', {
     title: 'foo',
     body: 'bar',
     userId: 1,
@@ -83,13 +77,9 @@ client('create a ressource with post', async () => {
 });
 
 client('update a ressource with put and patch', async () => {
-  const client = http({
-    json: true,
-    responseType: 'json',
-    url: 'https://jsonplaceholder.typicode.com/',
-  });
+  const client = http({ url: 'https://jsonplaceholder.typicode.com/' });
 
-  const res = await client.put('posts/1', {
+  const [_, res] = await client.put('posts/1', {
     title: 'foo',
     body: 'bar',
     userId: 1,
@@ -98,7 +88,7 @@ client('update a ressource with put and patch', async () => {
   type(res, 'object');
   ok('body' in res);
 
-  const res2 = await client.patch('posts/1', {
+  const [__, res2] = await client.patch('posts/1', {
     title: 'foo',
     body: 'bar',
     userId: 1,
@@ -108,13 +98,38 @@ client('update a ressource with put and patch', async () => {
   ok('body' in res2);
 });
 
-client('delete a ressource with delete', async () => {
+client('delete a ressource with delete', () => {
   http({
-    json: true,
-    responseType: 'json',
     url: 'https://jsonplaceholder.typicode.com/',
-    preResolve: (res) => ok(res.status === 200),
+    preResolvers: [(res) => ok(res.status === 200)],
   }).delete('posts/1');
+});
+
+client('delete a ressource with delete', () => {
+  http({
+    url: 'https://jsonplaceholder.typicode.com/',
+    preResolvers: [(res) => ok(res.status === 200)],
+  }).delete('posts/1');
+});
+
+client('handles errors properly', async () => {
+  const [error, data] = await http({
+    url: 'https://jsonplaceholder.typicode.com/',
+    preResolvers: [
+      (res) => {
+        if (res.status === 200) throw Error('Hello');
+      },
+    ],
+    catchers: [
+      (err) => {
+        ok(err.message === 'Hello');
+        return err;
+      },
+    ],
+  }).delete('posts/1');
+
+  instance(error, Error);
+  ok(data === null);
 });
 
 client.run();

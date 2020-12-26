@@ -31,11 +31,11 @@ interface Options {
   url: string;
   middlewares: Pipe[];
   responseType: 'json' | 'blob' | 'text' | 'arrayBuffer' | 'formData' | 'clone';
-  json: boolean;
   headers: Record<string, string>;
   params: URLSearchParams;
-  resolver: ResponsePiper;
-  catcher: ErrorPiper;
+  preResolvers: ((res: Response, value: T) => void)[];
+  resolvers: ResponsePiper[];
+  catchers: ErrorPiper[];
   fetchOptions: RequestInit;
 }
 ```
@@ -51,7 +51,7 @@ const client = http({
   ...
 })
 
-const res = await client.get<string>("/test");
+const [error, response] = await client.get<string>("/test");
 ```
 
 or/and pipe the client to modify them as you please
@@ -73,10 +73,10 @@ const client = http().pipe(
   headers({ 'Content-Type': 'application/json' }),
   params({ test: 'trololol' }),
   middleware((opts) => opts), // Pretty much useless as you can just do (opts) => opts
-  json(), // sets responseType to `json` and json to true
+  json(), // sets responseType to `json`
   resolve((res) => res), // Ran after the responseType is resolved fetch(url).then(r => r.json()).r(myResolver)
   error((err) => err),
 );
 
-const res = await client.get<string>('/test');
+const [error, response] = await client.get<string>('/test');
 ```

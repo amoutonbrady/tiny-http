@@ -1,54 +1,69 @@
 import {
   Options,
   Pipe,
-  AnyObject,
+  BaseObject,
   HttpClient,
   HttpClientObject,
 } from './types';
 import { cloneOptions } from './utils/cloneOptions';
 import { method, appendUrl, appendBody, params } from './operators';
 
-function makeFinalCall<T>(options: Options): Promise<T> {
+function makeFinalCall<T>(
+  options: Options<T>,
+): Promise<readonly [null, T] | readonly [Error, null]> {
   const {
     url,
-    json,
     headers,
     fetchOptions,
     responseType,
-    catcher,
-    resolver,
-    preResolve,
-  } = options.middlewares.reduce(
+    catchers,
+    resolvers,
+    preResolvers,
+  } = options.middlewares.reduce<Options<T>>(
     (opts, middleware) => middleware(opts),
     options,
   );
 
-  if (json) headers['Content-Type'] = 'application/json';
+  if (responseType === 'json') headers['Content-Type'] = 'application/json';
 
-  const params = decodeURI(options.params.toString());
-  const finalUrl = url + (params ? `?${params}` : '');
+  const finalUrl = new URL(url);
+  options.params.forEach((value, key) => finalUrl.searchParams.set(key, value));
 
-  return fetch(finalUrl, { ...fetchOptions, headers })
-    .then((r) => {
-      if (preResolve) preResolve(r);
-      return r[responseType]();
+  return fetch(finalUrl.toString(), { ...fetchOptions, headers })
+    .then(async (r) => {
+      const value = await r[responseType]();
+
+      preResolvers.reduce(
+        ({ r, value }, preResolver) => {
+          preResolver(r, value);
+          return { r, value };
+        },
+        { r, value },
+      );
+
+      return value;
     })
-    .then(resolver)
-    .catch(catcher);
+    .then(
+      (res) =>
+        [null, resolvers.reduce((r, resolver) => resolver(r), res)] as const,
+    )
+    .catch(
+      (err) =>
+        [catchers.reduce((e, catcher) => catcher(e), err), null] as const,
+    );
 }
 
 export const http: HttpClient = (userOpts = {}) => {
   const mergedOptions: Options = {
     url: '',
-    json: true,
     headers: {},
     middlewares: [],
     fetchOptions: {},
     responseType: 'json',
     params: new URLSearchParams(),
-    catcher: (err) => err,
-    resolver: (res) => res,
-    preResolve: (res) => res,
+    catchers: [],
+    resolvers: [],
+    preResolvers: [],
     ...userOpts,
   };
 
@@ -67,7 +82,7 @@ export const http: HttpClient = (userOpts = {}) => {
   };
 
   for (const httpVerb of ['POST', 'PATCH', 'PUT'] as const) {
-    res[httpVerb.toLowerCase()] = (url = '', body: AnyObject<any>) =>
+    res[httpVerb.toLowerCase()] = (url = '', body: BaseObject<any>) =>
       http(cloneOptions(mergedOptions))
         .pipe(method(httpVerb), appendUrl(url), appendBody(body))
         .run();

@@ -1,6 +1,6 @@
-import { Piper, AnyObject } from '../types';
+import { Piper, BaseObject } from '../types';
 
-export const headers: Piper<AnyObject> = (headers) => (opts) => ({
+export const headers: Piper<BaseObject> = (headers) => (opts) => ({
   ...opts,
   headers,
 });

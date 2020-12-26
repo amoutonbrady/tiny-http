@@ -505,12 +505,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@rollup/pluginutils", "virtual:beffd6671cc192294096a1300c2c85f19a70f463abb5750acc9610908c51bbd0add6a1b0b77824d3c85454e5fe203f0a8215a774de22d1c2ab64ccadff5a2597#npm:3.1.0"],
             ["@types/babel__core", null],
             ["@types/rollup", null],
+            ["@types/types__babel__core", null],
             ["rollup", "npm:2.35.1"]
           ],
           "packagePeers": [
             "@babel/core",
             "@types/babel__core",
             "@types/rollup",
+            "@types/types__babel__core",
             "rollup"
           ],
           "linkType": "HARD",

@@ -1,35 +1,59 @@
-export type HttpClient = (opts?: Partial<Options>) => HttpClientObject;
+export type HttpClient<T = BaseObject<any>> = (
+  opts?: Partial<Options<T>>,
+) => HttpClientObject;
+
+export type Res<T> = readonly [Error, null] | readonly [null, T];
 export interface HttpClientObject {
   pipe(...pipes: Pipe[]): HttpClientObject;
-  get<T = any>(url?: string, params?: AnyObject<any>): Promise<T>;
-  post<T = any>(url?: string, body?: AnyObject<any>): Promise<T>;
-  patch<T = any>(url?: string, body?: AnyObject<any>): Promise<T>;
-  put<T = any>(url?: string, body?: AnyObject<any>): Promise<T>;
-  delete<T = any>(url?: string, params?: AnyObject<any>): Promise<T>;
-  run<T>(): Promise<T>;
+  get<T = any>(
+    url?: string,
+    params?: BaseObject<string | number>,
+  ): Promise<Res<T>>;
+  post<T = any>(
+    url?: string,
+    body?: BaseObject<string | number>,
+  ): Promise<Res<T>>;
+  patch<T = any>(
+    url?: string,
+    body?: BaseObject<string | number>,
+  ): Promise<Res<T>>;
+  put<T = any>(
+    url?: string,
+    body?: BaseObject<string | number>,
+  ): Promise<Res<T>>;
+  delete<T = any>(
+    url?: string,
+    params?: BaseObject<string | number>,
+  ): Promise<Res<T>>;
+  run<T = any>(): Promise<Res<T>>;
 }
 
-export interface Options {
+export interface Options<T = BaseObject<any>> {
   url: string;
-  middlewares: Pipe[];
+  middlewares: Pipe<T>[];
   responseType: 'json' | 'blob' | 'text' | 'arrayBuffer' | 'formData' | 'clone';
-  json: boolean;
+  /**
+   * This is automatically inferred from responseType now
+   *
+   * @deprecated
+   */
+  json?: boolean;
   headers: Record<string, string>;
   params: URLSearchParams;
-  preResolve: (res: Response) => unknown;
-  resolver: ResponsePiper;
-  catcher: ErrorPiper;
+  preResolvers: ((res: Response, value: T) => unknown)[];
+  resolvers: ResponsePiper<T>[];
+  catchers: ErrorPiper[];
   fetchOptions: RequestInit;
 }
 
-export type ResponsePiper<HttpResponse = any, YourResponse = any> = (
+export type ResponsePiper<YourResponse = any, HttpResponse = any> = (
   res: HttpResponse,
 ) => YourResponse;
 export type ErrorPiper<HttpError = Error, YourError = Error> = (
   err: HttpError,
 ) => YourError;
-export type Pipe = (options: Options) => Options;
+export type Pipe<T = BaseObject> = (options: Options<T>) => Options<T>;
 export type Piper<T = any> = (params: T) => Pipe;
 export type ArgumentlessPiper = () => Pipe;
-export type AnyObject<T = string> = Record<string, T>;
+export type BaseObject<T = string> = Record<string, T>;
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
