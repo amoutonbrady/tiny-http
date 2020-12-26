@@ -9,18 +9,9 @@ export interface HttpClientObject {
     url?: string,
     params?: BaseObject<string | number>,
   ): Promise<Res<T>>;
-  post<T = any>(
-    url?: string,
-    body?: BaseObject<string | number>,
-  ): Promise<Res<T>>;
-  patch<T = any>(
-    url?: string,
-    body?: BaseObject<string | number>,
-  ): Promise<Res<T>>;
-  put<T = any>(
-    url?: string,
-    body?: BaseObject<string | number>,
-  ): Promise<Res<T>>;
+  post<T = any>(url?: string, body?: BaseObject): Promise<Res<T>>;
+  patch<T = any>(url?: string, body?: BaseObject): Promise<Res<T>>;
+  put<T = any>(url?: string, body?: BaseObject): Promise<Res<T>>;
   delete<T = any>(
     url?: string,
     params?: BaseObject<string | number>,
