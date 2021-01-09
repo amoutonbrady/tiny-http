@@ -15,16 +15,16 @@ __metadata:
     "@rollup/plugin-node-resolve": ^11.0.1
     "@rollup/plugin-typescript": ^8.1.0
     "@skypack/package-check": ^0.2.2
-    "@types/node": ^14.14.16
+    "@types/node": ^14.14.20
     "@types/node-fetch": ^2.5.7
     esm: ^3.2.25
     gitmoji-changelog: ^2.2.0
     node-fetch: ^2.6.1
     prettier: ^2.2.1
-    rollup: ^2.35.1
+    rollup: ^2.36.1
     rollup-plugin-terser: ^7.0.2
     ts-node: ^9.1.1
-    tslib: ^2.0.3
+    tslib: ^2.1.0
     typescript: ^4.1.3
     uvu: ^0.5.1
   languageName: unknown
@@ -464,10 +464,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^14.14.16":
-  version: 14.14.16
-  resolution: "@types/node@npm:14.14.16"
-  checksum: 220a7496ec73861ad7fb4ae762618bb46ac9d5d5f92f3a2fcebfd1a81a509ff558eface7bcd1d632598a8a28f856a74b324e7165918e8334a59c221cb06d15e3
+"@types/node@npm:*, @types/node@npm:^14.14.20":
+  version: 14.14.20
+  resolution: "@types/node@npm:14.14.20"
+  checksum: 84a9fd73de978967723f951173ff4d07dca259941d3e37c7a3dbb236c09b3f2294bb2098678a806afe6fd6cac39a7d0a1d399f602378c951bd5d01ede535d570
   languageName: node
   linkType: hard
 
@@ -2568,14 +2568,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"kleur@npm:^4.0.3":
-  version: 4.1.1
-  resolution: "kleur@npm:4.1.1"
-  checksum: 213397aca018cbd6e77c1f118c5b7090666c33365555a90760b99399770b0e4559f5e6b67cd1f0c5bb91549855b81a0997e6c1dc0dc4d4922b833207e59885b8
-  languageName: node
-  linkType: hard
-
-"kleur@npm:^4.1.3":
+"kleur@npm:^4.0.3, kleur@npm:^4.1.3":
   version: 4.1.3
   resolution: "kleur@npm:4.1.3"
   checksum: 2f7c8faa80c3581c8dad4d6b47a6790744b475a83a6815d05c5730fa3e87e65881be043455cebca99a89f7cab045bfa7eeb3c5f66c9f7c0385f4cb26a688e31b
@@ -4432,9 +4425,9 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.35.1":
-  version: 2.35.1
-  resolution: "rollup@npm:2.35.1"
+"rollup@npm:^2.36.1":
+  version: 2.36.1
+  resolution: "rollup@npm:2.36.1"
   dependencies:
     fsevents: ~2.1.2
   dependenciesMeta:
@@ -4442,7 +4435,7 @@ fsevents@~2.1.2:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 01e8b621baf3b35e1a28e3679cf9bdd4c22c2e999a895343e0b1e02dfe735f92a9fe439042e1b35c981663e9a8b75c1d707e6c27d786170febbb503b83dfed39
+  checksum: bb48730bf382d6439012a1504a8ca2f676657b472e9fbf72f726701c3091325229e1501c75088f4feebf6c9eb54cfc01353a11b50d3b0b9fa23764aaf5fca38c
   languageName: node
   linkType: hard
 
@@ -5143,10 +5136,10 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "tslib@npm:2.0.3"
-  checksum: 447bfca5deaa157806c3f77eaba74d05dd0b38b014e47ce79d98b5c77ce7d91b00a687ba13ca1b5a74d35ca1098ac7a072c0a97fad06f0266612f2a03a6c8e8f
+"tslib@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "tslib@npm:2.1.0"
+  checksum: d8f5bdd067611651c6b846c2388f4dc8ba1f5af124e66105f5263d1ad56da17f4b8c6566887ca2f205c5a9758451871ceca87d5d06087af2dca1699c5e33db69
   languageName: node
   linkType: hard
 

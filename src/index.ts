@@ -99,3 +99,4 @@ export const http: HttpClient = (userOpts = {}) => {
 };
 
 export * from './operators';
+export * from './types';
