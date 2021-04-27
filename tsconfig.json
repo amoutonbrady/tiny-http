@@ -1,15 +1,4 @@
 {
-  "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "allowJs": true,
-      "allowSyntheticDefaultImports": true,
-      "esModuleInterop": true,
-      "target": "ESNext",
-      "module": "commonjs"
-    },
-    "include": ["tests/**/*"]
-  },
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
@@ -24,6 +13,6 @@
     "sourceMap": true,
     "inlineSources": true
   },
-  "include": ["src/index.ts"],
+  "include": ["src/http.ts"],
   "exclude": ["node_modules/**/*"]
 }
