@@ -1,7 +1,0 @@
-{
-  "recommendations": [
-    "redhat.vscode-yaml",
-    "arcanis.vscode-zipfs",
-    "esbenp.prettier-vscode"
-  ]
-}
