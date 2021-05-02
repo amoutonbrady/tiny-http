@@ -28,10 +28,10 @@
   "types": "dist/http.d.ts",
   "scripts": {
     "build": "rm -rf dist && rollup -c && tsc",
-    "prepublishOnly": "yarn build && yarn test",
+    "prepublishOnly": "pnpm build && pnpm test",
     "test": "uvu -r jiti/register tests",
-    "changelog": "npx gitmoji-changelog",
-    "check": "npx @skypack/package-check",
+    "changelog": "pnpx gitmoji-changelog",
+    "check": "pnpx @skypack/package-check",
     "format": "prettier --write \"src/**/*.ts\""
   },
   "keywords": [
