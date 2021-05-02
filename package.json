@@ -1,6 +1,6 @@
 {
   "name": "@amoutonbrady/tiny-http",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A tiny client side HTTP client, light and extensible",
   "sideEffects": false,
   "type": "module",
