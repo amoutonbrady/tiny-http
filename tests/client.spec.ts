@@ -1,9 +1,9 @@
 import { http, url, json, resolve } from '..';
 import { suite } from 'uvu';
 import { instance, ok, type } from 'uvu/assert';
-import fetch from 'node-fetch';
+import nodeFetch from 'node-fetch';
 // @ts-ignore
-globalThis.fetch = fetch;
+globalThis.fetch = nodeFetch;
 
 const client = suite('client');
 
@@ -130,6 +130,16 @@ client('handles errors properly', async () => {
 
   instance(error, Error);
   ok(data === null);
+});
+
+client('should work with a custom fetch instance', async () => {
+  const client = http({
+    fetchInstance: (nodeFetch as unknown) as typeof fetch,
+  }).pipe(url('https://jsonplaceholder.typicode.com/'), json());
+
+  const [_, todos] = await client.get('todos');
+
+  ok(Array.isArray(todos));
 });
 
 client.run();

@@ -15,6 +15,7 @@ function makeFinalCall<T>(
     url,
     headers,
     fetchOptions,
+    fetchInstance,
     responseType,
     catchers,
     resolvers,
@@ -29,7 +30,10 @@ function makeFinalCall<T>(
   const finalUrl = new URL(url);
   options.params.forEach((value, key) => finalUrl.searchParams.set(key, value));
 
-  return fetch(finalUrl.toString(), { ...fetchOptions, headers })
+  return (fetchInstance as typeof fetch)(finalUrl.toString(), {
+    ...fetchOptions,
+    headers,
+  })
     .then(async (r) => {
       const value = await r[responseType]();
 
@@ -64,6 +68,7 @@ export const http: HttpClient = (userOpts = {}) => {
     catchers: [],
     resolvers: [],
     preResolvers: [],
+    fetchInstance: fetch,
     ...userOpts,
   };
 
@@ -81,17 +86,18 @@ export const http: HttpClient = (userOpts = {}) => {
     },
   };
 
-  for (const httpVerb of ['POST', 'PATCH', 'PUT'] as const) {
-    res[httpVerb.toLowerCase()] = (url = '', body: BaseObject<any>) =>
-      http(cloneOptions(mergedOptions))
-        .pipe(method(httpVerb), appendUrl(url), appendBody(body))
-        .run();
-  }
+  const httpVerbs = ['GET', 'DELETE', 'POST', 'PATCH', 'PUT'] as const;
 
-  for (const httpVerb of ['GET', 'DELETE'] as const) {
-    res[httpVerb.toLowerCase()] = (url = '', query = {}) =>
+  for (let i = 0, length = httpVerbs.length; i < length; i++) {
+    const httpVerb = httpVerbs[i];
+    const bodyHandler = i > 1 ? appendBody : params;
+
+    res[httpVerb.toLowerCase()] = (
+      url = '',
+      bodyOrParams = i > 1 ? undefined : {},
+    ) =>
       http(cloneOptions(mergedOptions))
-        .pipe(method(httpVerb), appendUrl(url), params(query))
+        .pipe(method(httpVerb), appendUrl(url), bodyHandler(bodyOrParams!))
         .run();
   }
 

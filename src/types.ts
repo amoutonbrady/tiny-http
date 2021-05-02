@@ -1,3 +1,4 @@
+import nodeFetch from 'node-fetch';
 export type HttpClient<T = BaseObject<any>> = (
   opts?: Partial<Options<T>>,
 ) => HttpClientObject;
@@ -35,6 +36,7 @@ export interface Options<T = BaseObject<any>> {
   resolvers: ResponsePiper<T>[];
   catchers: ErrorPiper[];
   fetchOptions: RequestInit;
+  fetchInstance: typeof fetch | typeof nodeFetch;
 }
 
 export type ResponsePiper<YourResponse = any, HttpResponse = any> = (
