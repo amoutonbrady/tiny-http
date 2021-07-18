@@ -1,6 +1,7 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import esbuild from 'rollup-plugin-esbuild'
+import clean from 'rollup-plugin-clean';
 import pkg from './package.json';
 
 /**
@@ -28,6 +29,7 @@ const config = {
     },
   ],
   plugins: [
+    clean(),
     nodeResolve({ extensions: ['.ts'] }),
     esbuild({ target: 'esnext' })
   ],

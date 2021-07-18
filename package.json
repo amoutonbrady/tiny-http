@@ -27,7 +27,7 @@
   },
   "types": "dist/http.d.ts",
   "scripts": {
-    "build": "rm -rf dist && rollup -c && tsc",
+    "build": "rollup -c && tsc",
     "prepublishOnly": "pnpm build && pnpm test",
     "test": "uvu -r jiti/register tests",
     "changelog": "pnpx gitmoji-changelog",
@@ -52,6 +52,7 @@
     "node-fetch": "^2.6.1",
     "prettier": "^2.3.2",
     "rollup": "^2.53.2",
+    "rollup-plugin-clean": "^1.0.0",
     "rollup-plugin-esbuild": "^4.5.0",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.3.5",
