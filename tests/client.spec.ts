@@ -134,7 +134,7 @@ client('handles errors properly', async () => {
 
 client('should work with a custom fetch instance', async () => {
   const client = http({
-    fetchInstance: (nodeFetch as unknown) as typeof fetch,
+    fetchInstance: nodeFetch as unknown as typeof fetch,
   }).pipe(url('https://jsonplaceholder.typicode.com/'), json());
 
   const [_, todos] = await client.get('todos');
